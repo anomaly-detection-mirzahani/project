@@ -115,6 +115,76 @@ def cohort_wd_lesson():
     display(count_topics_wd.head(5))
     print()
 
+def count_lessons_ds():
+    count_lessons_ds = ds[~(ds.full_lesson_name=='index')].groupby(['full_lesson_name','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    count_topics_ds = ds[~(ds.full_lesson_name=='index')].groupby(['topic','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    #count_lessons_wd[count_lessons_wd.full_lesson_name == 'spring fundamentals']
+    count_lessons_ds = count_lessons_ds.set_index('cohort_name')
+    count_lessons_ds = count_lessons_ds[count_lessons_ds.page > 100]
+    #count_lessons_wd.sort_values(by=['full_lesson_name', 'page'], ascending=[True, False]).tail(50)
+    display(count_lessons_ds.sort_values(by=['full_lesson_name', 'page'], ascending=[True, False]).head(2))
+
+def count_lessons_wd():
+    count_lessons_wd = wd[~(wd.full_lesson_name=='index')].groupby(['full_lesson_name','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    count_topics_wd = wd[~(wd.full_lesson_name=='index')].groupby(['topic','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    #count_lessons_wd[count_lessons_wd.full_lesson_name == 'spring fundamentals']
+    count_lessons_wd = count_lessons_wd.set_index('cohort_name')
+    count_lessons_wd = count_lessons_wd[count_lessons_wd.page > 500]
+    #count_lessons_wd.sort_values(by=['full_lesson_name', 'page'], ascending=[True, False]).tail(50)
+    count_lessons_wd = count_lessons_wd[count_lessons_wd.full_lesson_name == 'html-css css-i']
+    display(count_lessons_wd.head(2))
+
+def count_topics_wd():
+    count_topics_wd = wd[~(wd.topic=='index')].groupby(['full_lesson_name','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    count_topics_wd = wd[~(wd.topic=='index')].groupby(['topic','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    #count_lessons_wd[count_lessons_wd.full_lesson_name == 'spring fundamentals']
+    count_topics_wd = count_topics_wd.set_index('cohort_name')
+    count_topics_wd = count_topics_wd[count_topics_wd.page > 500]
+    #count_lessons_wd.sort_values(by=['full_lesson_name', 'page'], ascending=[True, False]).tail(50)
+    count_topics_wd = count_topics_wd[count_topics_wd.topic == 'html-css']
+    #display(count_lessons_wd.head(2))
+    display(count_topics_wd.sort_values(by=['topic', 'page'], ascending=[True, False]).head(2))
+
+def count_topics_ds():
+    count_topics_ds = ds[~(ds.topic=='index')].groupby(['full_lesson_name','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    count_topics_ds = ds[~(ds.topic=='index')].groupby(['topic','cohort_name']).\
+        page.count().sort_values(ascending=False).reset_index()
+    #count_lessons_wd[count_lessons_wd.full_lesson_name == 'spring fundamentals']
+    count_topics_ds = count_topics_ds.set_index('cohort_name')
+    count_topics_ds = count_topics_ds[count_topics_ds.page > 100]
+    #count_lessons_wd.sort_values(by=['full_lesson_name', 'page'], ascending=[True, False]).tail(50)
+    #count_topics_ds = count_topics_ds[count_topics_wd.topic == 'html-css']
+    #display(count_lessons_wd.head(2))
+    display(count_topics_ds.sort_values(by=['topic', 'page'], ascending=[True, False]).head(2))
+
+def lessons_cohorts():
+    print('WEB DEV COHORTS')
+    print('--------------------')
+    print('FULL LESSON NAME')
+    count_lessons_wd()
+    print()    
+    
+    print('CHAPTER NAME')
+    count_topics_wd()
+    print()
+
+    print('DATA SCIENCE COHORTS')
+    print('--------------------')
+    print('FULL LESSON NAME')
+    count_lessons_ds()
+    print()    
+    
+    print('CHAPTER NAME')
+    count_topics_ds()
+    print()
+
 ####### QUESTION 4
 def compute_pct_b(pages_per_user: pd.Series, span: int, weight: float, user: int) -> pd.DataFrame:
     '''
@@ -193,7 +263,7 @@ def suspicios_ids(df, title=''):
     for u in users:
         suspicious_user = one_user_df_prep(df, u)
         suspicious_user.plot(figsize=(12,5), label=u)
-        plt.title('Top 10 anomalies ' + title)
+        plt.title('Top 5 anomalies ' + title)
         plt.legend()
     plt.show()
 

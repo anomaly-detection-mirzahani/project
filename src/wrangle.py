@@ -63,12 +63,12 @@ df.lesson = df.lesson.apply(return_first_element)
 
 
 # Yuvia's solution
-lessons = pd.read_csv('data/lessons.csv', index_col='Unnamed: 0')
-lessons.Topic = np.where(lessons.Topic.isnull(), 'index', lessons.Topic)
-lessons.Lesson = np.where(lessons.Lesson.isnull(), lessons.Topic, lessons.Lesson)
+#lessons = pd.read_csv('data/lessons.csv', index_col='Unnamed: 0')
+#lessons.Topic = np.where(lessons.Topic.isnull(), 'index', lessons.Topic)
+#lessons.Lesson = np.where(lessons.Lesson.isnull(), lessons.Topic, lessons.Lesson)
 
 # add Yuvia's lessons
-df = pd.concat([df, lessons], axis=1)
+#df = pd.concat([df, lessons], axis=1)
 
 df['full_lesson_name'] = np.where(df.lesson.isnull(), df.topic, df.topic + ' ' + df.lesson)
 df.lesson = np.where(df.lesson.isnull(), df.topic, df.lesson)
