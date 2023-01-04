@@ -71,13 +71,13 @@ def viz_top_lessons():
 def viz_top_lessons_dev():
     popular_lessons2 = get_top_lessons(wd, 'WD', 5, viz=True)
                               
-    plt.figure(figsize=(20, 5))
+    plt.figure(figsize=(12, 6))
     ax = sns.barplot(data=popular_lessons2, x='full_lesson_name', y='page')
     plt.xticks(rotation=45)
     plt.show()
 
 def viz_top_lessons_ds():
-    popular_lessons2 = get_top_lessons(ds, 'DS', 5, viz=True)
+    popular_lessons2 = get_top_lessons(ds, 'DS', 6, viz=True)[1:]
                               
     plt.figure(figsize=(12, 6))
     ax = sns.barplot(data=popular_lessons2, x='full_lesson_name', y='page')
@@ -191,7 +191,7 @@ def suspicios_ids(df):
     users = anomalies.iloc[0:5].user
     for u in users:
         suspicious_user = one_user_df_prep(df, u)
-        suspicious_user.plot(figsize=(20,5), label=u)
+        suspicious_user.plot(figsize=(12,5), label=u)
         plt.title('Top 10 anomalies')
         plt.legend()
     plt.show()
