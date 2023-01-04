@@ -180,8 +180,9 @@ def find_anomalies(df, user, span, weight, plot=False):
     # Return only records that sit outside of bollinger band upper limit
     return my_df[my_df.pct_b>1]
 
-def suspicios_ids(df):
+def suspicios_ids(df, title=''):
     ts = df.set_index(df.date)
+    ts = ts[ts.cohort_name != 'Staff']
     pages = ts['page'].resample('d').count()
     anomalies = pd.DataFrame()
     for u in list(ts.id.unique()):
@@ -192,7 +193,7 @@ def suspicios_ids(df):
     for u in users:
         suspicious_user = one_user_df_prep(df, u)
         suspicious_user.plot(figsize=(12,5), label=u)
-        plt.title('Top 10 anomalies')
+        plt.title('Top 10 anomalies ' + title)
         plt.legend()
     plt.show()
 
