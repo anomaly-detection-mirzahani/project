@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import json
+import os
 
 filename = 'data/clean_data.csv'
 
@@ -88,6 +89,11 @@ try:
 except KeyError:
     print('The column doesn\'t exist')
 
+# read json file and save it to the dictionary
+with open("data/end_dates.json", "r") as json_file1:
+    dates_dict = json.load(json_file1)
+df['end_date'] = df.cohort_name.map(dates_dict)
+
 
 df.to_csv(filename)
 
@@ -108,7 +114,8 @@ def change_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     # integer below 255
     df.cohort = df.cohort.astype('uint8')
     # dates
-    for col in ['date_time', 'date']:
+    #df.end_date = pd.to_datetime(df.end_date)
+    for col in ['date_time', 'date', 'end_date']:
         df[col] = pd.to_datetime(df[col])
     # categories
     for col in ['cohort_name', 'field']:
@@ -117,8 +124,17 @@ def change_dtypes(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 ####### Return clean data
-def get_logs():
+def get_logs1():
     '''
     returns dataframe
     '''
     return change_dtypes(df)
+
+def get_logs():
+    if os.path.isfile(filename):
+        df1 = pd.read_csv(filename)
+        df1 = change_dtypes(df)
+    else:
+        df1 = get_logs1()
+        df1.to_csv(filename)
+    return df1
