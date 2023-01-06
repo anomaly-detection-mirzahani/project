@@ -11,4 +11,3 @@ Correctly identify possible "webscraping" of curriculum and gain a better unders
 
 ## Data Source
 We `*.txt` file with logs information of CodeUp.
->>>>>>> 33381ee0bbb79202c802681bb6181c6a2487b13d
